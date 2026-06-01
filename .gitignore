@@ -1,0 +1,44 @@
+# Maven compiled output
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.releaseBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/.maven-wrapper.properties
+
+# STS/Eclipse metadata & settings
+.metadata
+.settings/
+.project
+.classpath
+.factorypath
+bin/
+
+# IntelliJ IDEA metadata
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# NetBeans metadata
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# OS-specific temporary files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Application logs & reports
+*.log
+reports/

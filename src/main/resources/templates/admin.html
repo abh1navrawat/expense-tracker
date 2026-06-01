@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout('Admin Panel', ~{::div#adminBody})}">
+<body>
+<div id="adminBody">
+
+    <!-- Header Section -->
+    <div class="dashboard-header">
+        <div>
+            <h1>Admin Portal</h1>
+            <p>Overview of registered user portfolios and system-wide expense volume.</p>
+        </div>
+    </div>
+
+    <!-- Admin KPI Summary Widgets -->
+    <div class="kpi-grid" style="margin-bottom: 2rem;">
+        <div class="card kpi-card kpi-total">
+            <div class="kpi-title">Active Platform Accounts</div>
+            <div class="kpi-value" th:text="${totalUsers}">0</div>
+            <p style="color: hsl(var(--muted-foreground)); font-size: 0.75rem; margin-top:0.25rem;">Total cumulative registered accounts.</p>
+        </div>
+        <div class="card kpi-card kpi-expense">
+            <div class="kpi-title">Platform Expense Volume</div>
+            <div class="kpi-value" th:text="'USD ' + ${#numbers.formatDecimal(totalPlatformExpenses, 1, 2)}">USD 0.00</div>
+            <p style="color: hsl(var(--muted-foreground)); font-size: 0.75rem; margin-top:0.25rem;">Sum overall recorded transactions across all users.</p>
+        </div>
+        <div class="card kpi-card kpi-income">
+            <div class="kpi-title">Platform Role Access</div>
+            <div class="kpi-value" style="color: hsl(220 70% 60%);">ADMIN</div>
+            <p style="color: hsl(var(--muted-foreground)); font-size: 0.75rem; margin-top:0.25rem;">Authorized to monitor systemic active directory listings.</p>
+        </div>
+    </div>
+
+    <!-- User Directories Grid Table -->
+    <div class="card" style="padding: 1.5rem; margin-bottom: 2rem;">
+        <div class="section-title" style="font-size:1.1rem; margin-bottom: 1rem;">Registered Users Directory</div>
+        
+        <!-- Action Status Alerts -->
+        <div th:if="${error}" style="background: hsl(var(--destructive) / 0.15); border: 1px solid hsl(var(--destructive)); color: hsl(0 0% 98%); padding: 0.75rem; border-radius: var(--radius); font-size: 0.85rem; margin-bottom: 1.25rem; text-align: center;" th:text="${error}"></div>
+        <div th:if="${success}" style="background: hsl(160 60% 45% / 0.15); border: 1px solid hsl(160 60% 45%); color: hsl(0 0% 98%); padding: 0.75rem; border-radius: var(--radius); font-size: 0.85rem; margin-bottom: 1.25rem; text-align: center;" th:text="${success}"></div>
+
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Email Address</th>
+                        <th>Preferred Base Currency</th>
+                        <th>Security Authorization Role</th>
+                        <th style="text-align: center; width: 120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u : ${users}">
+                        <td th:text="${u.id}">1</td>
+                        <td th:text="${u.email}">name@tracker.com</td>
+                        <td th:text="${u.baseCurrency}" style="font-weight: 700;">USD</td>
+                        <td>
+                            <span th:text="${u.role}" th:class="${u.role.name() == 'ROLE_ADMIN'} ? 'badge badge-admin' : 'badge badge-user'">ROLE_USER</span>
+                        </td>
+                        <td style="text-align: center;">
+                            <!-- Safety check: Do not show delete button for the logged in admin user -->
+                            <form th:if="${u.id != user.id}" th:action="@{/admin/users/{id}/delete(id=${u.id})}" method="POST" onsubmit="return confirm('DANGER: Are you sure you want to permanently delete this user account? All of their expenses, custom categories, and reports will be deleted.');" style="display: inline;">
+                                <button type="submit" class="btn btn-danger" style="padding: 0 0.5rem; height: 26px; font-size: 0.7rem;">Delete</button>
+                            </form>
+                            <span th:if="${u.id == user.id}" style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">Active Session</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
