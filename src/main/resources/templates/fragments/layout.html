@@ -90,6 +90,58 @@
     <!-- Toast Notification Drawer -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- AI Financial Advisor Floating Trigger & Panel -->
+    <th:block sec:authorize="isAuthenticated()">
+        <button id="aiChatTriggerBtn" class="ai-trigger-btn" aria-label="Open AI Advisor">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span>Ask AI Advisor</span>
+        </button>
+
+        <div id="aiChatPanel" class="ai-chat-panel">
+            <div class="ai-chat-header">
+                <div class="ai-chat-header-title">
+                    <span class="ai-badge-dot"></span>
+                    <strong style="font-size: 0.95rem; color: hsl(var(--foreground));">Fintrack AI Advisor</strong>
+                </div>
+                <button id="aiChatCloseBtn" class="btn btn-ghost" style="padding:0; width: 28px; height: 28px; border-radius:50%; font-size: 1.1rem; line-height: 1;">&times;</button>
+            </div>
+
+            <div id="aiChatBody" class="ai-chat-body">
+                <div class="ai-msg ai-msg-bot">
+                    <div class="ai-avatar">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <div class="ai-bubble bot-bubble">
+                        Hello! I am your AI Financial Advisor. Ask me anything about your current month's spending, budget trends, or category breakdown!
+                    </div>
+                </div>
+            </div>
+
+            <div id="aiChatChips" class="ai-chips-container">
+                <button type="button" class="ai-chip" onclick="sendQuickPrompt('Why did I spend more this month?')">Why did I spend more this month?</button>
+                <button type="button" class="ai-chip" onclick="sendQuickPrompt('What is my top spending category?')">Top spending category?</button>
+                <button type="button" class="ai-chip" onclick="sendQuickPrompt('How can I cut expenses?')">How can I cut expenses?</button>
+            </div>
+
+            <div class="ai-chat-footer">
+                <form id="aiChatForm" class="ai-chat-form">
+                    <input class="form-control" type="text" id="aiChatInput" placeholder="Ask AI about your spending..." required style="font-size: 0.85rem; height: 38px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 0 0.85rem; height: 38px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <script th:src="@{/js/ai-chat.js}"></script>
+    </th:block>
+
     <!-- Attach dynamic logic wrapper -->
     <script th:src="@{/js/app.js}"></script>
 </body>
